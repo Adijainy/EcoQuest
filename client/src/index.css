@@ -8,6 +8,12 @@
     @apply block font-Inter border border-gray-400 rounded-md px-3 py-2 w-full text-sm text-gray-700 my-2;
   }
   .btn-gradient {
-    @apply bg-gradient-to-r from-richgreen-50 to-richgreen-300 p-2 my-3 w-full text-white font-semibold rounded-lg;
+    @apply bg-gradient-to-r from-richgreen-50 to-richgreen-300 p-2 my-3 w-full text-white font-semibold rounded-lg hover:from-richgreen-300 hover:to-richgreen-50 transition-all duration-1000;
+  }
+  .special-box {
+    @apply border-2 border-richgreen-50 bg-richgreen-100 bg-opacity-10 rounded-2xl px-6 py-4;
+  }
+  .btn-point {
+    @apply text-xs font-normal border-2 rounded-full py-1 px-2 text-orange-500  border-orange-500;
   }
 }
