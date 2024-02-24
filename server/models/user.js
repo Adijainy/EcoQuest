@@ -34,7 +34,16 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Task'
         }
-    ]
+    ],
+    carbonAvoided:{
+        type: Number,
+        default: 0
+    },
+    isAdmin:{
+        type: Boolean,
+        default: false
+    }
+    
     
 
 })
