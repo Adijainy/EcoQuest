@@ -28,7 +28,12 @@ const taskSchema = new mongoose.Schema({
             type: Number,
             required: true,
         }
-    ]
+    ],
+    specialTask: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
 })
 
 module.exports = mongoose.model("Task", taskSchema);
