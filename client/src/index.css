@@ -1,3 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poller+One&family=Poppins:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .text-field {
+    @apply block font-Inter border border-gray-400 rounded-md px-3 py-2 w-full text-sm text-gray-700 my-2;
+  }
+  .btn-gradient {
+    @apply bg-gradient-to-r from-richgreen-50 to-richgreen-300 p-2 my-3 w-full text-white font-semibold rounded-lg;
+  }
+}
