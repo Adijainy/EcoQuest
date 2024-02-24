@@ -11,7 +11,7 @@ const uploadFileToCloudinary = require('../utills/uploadOnCloudinary');
 exports.createUser = async(req, res) => {
     try{
         console.log("req.body: ", req.body);
-        const { name, email, password } = req.body;
+        const { name, email, password, isAdmin} = req.body;
         const { profilePic } = req.files;
         //validations
         if(!name || !email || !password || !profilePic){
@@ -46,7 +46,7 @@ exports.createUser = async(req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         //create new user
         const user = new User({
-            name, email, password: hashedPassword, profilePicURL
+            name, email, password: hashedPassword, profilePicURL, isAdmin
         });
 
         //save user to database
@@ -95,6 +95,7 @@ exports.loginUser = async(req, res) => {
             const payload = {
                 email: user.email,
                 id: user._id,
+                isAdmin: user.isAdmin
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET_KEY,{
                 expiresIn: '2h',
