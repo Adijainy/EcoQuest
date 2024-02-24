@@ -10,6 +10,7 @@ module.exports = {
       },
       colors: {
         richgreen: {
+          10: "#FAFFF7",
           50: "#8FCB73",
           100: "#5ECB46",
           200: "#619878",
