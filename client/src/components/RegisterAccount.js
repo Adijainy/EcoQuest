@@ -2,19 +2,31 @@ import React, { useState } from "react";
 import Header from "./Header";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate, Link} from 'react-router-dom';
+import { registerOperation} from '../service/operations/auth'
+//import { useDispatch } from 'react-redux'
 
 const RegisterAccount = () => {
-  const { register, handleSubmit, errors, reset } = useForm();
+  const navigate = useNavigate();
+  //const dispatch = useDispatch();
+  const { register, handleSubmit, reset } = useForm();
   const [passwordShown, setPasswordShown] = useState(false);
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
-  const handleFormSubmit = (data) => {
-    console.log(data);
+  const handleFormSubmit = async(data) => {
+    const formData = new FormData();
+    formData.append('profilePic', data.profilePic[0]);
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    //console.log("Register Form data : ", data);
     if (data.password !== data.confirmPassword) {
       alert("Passwords do not match");
       reset();
       return;
     }
-  };
+    //eslint-disable-next-line
+    const result = await registerOperation(formData, navigate);
+};
   return (
     <div className="flex w-screen h-screen">
       <Header />
@@ -37,6 +49,8 @@ const RegisterAccount = () => {
             required={true}
             {...register("email", { required: true })}
           />
+
+          <input type="file"  className="text-field" {...register("profilePic", { required: true })} placeholder="Profile Picture" required/>
           {/* {errors.email && <p className="text-red-500">Email is required</p>} */}
           <div className="relative">
             <input
@@ -91,7 +105,7 @@ const RegisterAccount = () => {
         </form>
         <p className="text-base">
           Already have an Account?{" "}
-          <span className="text-richgreen-100 font-semibold">Log in</span>
+          <Link to = "/login"><span className="text-richgreen-100 font-semibold">Log in</span></Link>
         </p>
       </div>
     </div>
