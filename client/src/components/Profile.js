@@ -1,15 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { IoShareSocialSharp } from "react-icons/io5";
 import {
   FacebookShareButton,
   TwitterShareButton,
   LinkedinShareButton,
 } from "react-share";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   //calculate percentage reduction in carbon emissions
+  const {user} = useSelector((state) => state.user);
   const averageCarbonFootprintPerYearInTons = 5;
-  const percentageReduction = function calculatePercentageReduction(
+  const[decInCarbon, setDecInCarbon] = useState(0);
+
+  useEffect(()=>{
+    setDecInCarbon(calculatePercentageReduction(user.carbonAvoided, averageCarbonFootprintPerYearInTons))
+  })
+  
+  console.log("USER PROFILE", user);
+  
+  function calculatePercentageReduction(
     totalCarbonAvoidedInKg,
     averageCarbonFootprintPerYearInTons
   ) {
@@ -19,6 +29,7 @@ const Profile = () => {
       (totalCarbonAvoidedInKg / averageCarbonFootprintPerYearInKg) * 100;
     return percentageReduction;
   };
+  
   // console.log(
   //   "Percentage reduction in carbon emissions: " +
   //     percentageReduction.toFixed(2) +
@@ -35,9 +46,13 @@ const Profile = () => {
         ref={profileRef}
       >
         <div className="text-left mt-2 mb-2 text-richgreen-400 flex justify-between">
-          <div>
-            <h2 className="text-3xl font-semibold mb-1">Akash Litoriya</h2>
-            <h3 className="text-sm mb-3">akashlitoriya8@gmail.com</h3>
+
+          <div className="flex items-center gap-4">
+            <img src={user.profilePicURL} alt="user profile pic" className="w-24 rounded-full"/>
+            <div>
+            <h2 className="text-3xl font-semibold mb-1">{user.name}</h2>
+            <h3 className="text-sm mb-3">{user.email}</h3>
+            </div>
           </div>
           <div>
             <button onClick={() => setShowShare(!showShare)}>
@@ -52,12 +67,12 @@ const Profile = () => {
         <p className="mb-1">
           <span className="highlight">Points: </span>
           Level Up! You've earned{" "}
-          <span className="highlight ">350 points </span> for your eco-efforts.
+          <span className="highlight ">{user.points} points </span> for your eco-efforts.
           Keep it up!
         </p>
         <p>
           <span className="highlight">Carbon Countdown: </span> You've helped
-          remove <span className="highlight">3.5 kg of CO2</span> , ticking down
+          remove <span className="highlight">{user.carbonAvoided} kg of CO2</span> , ticking down
           the clock on climate change!
         </p>
         <h3 className="text-xl font-semibold text-richgreen-400 mt-3 mb-1">
@@ -65,7 +80,7 @@ const Profile = () => {
         </h3>
         <div className="bg-richgreen-400 h-[0.1rem] w-44 mb-2"></div>
         <p>
-          You're <span className="highlight"> 35% </span> more eco-conscious
+          You're <span className="highlight"> {`${decInCarbon.toFixed(2)}%`} </span> more eco-conscious
           than the average user! Keep inspiring others!
         </p>
         <h3 className="text-xl font-semibold text-richgreen-400 mt-3 mb-1">
