@@ -2,12 +2,23 @@ import React, { useState } from "react";
 import Header from "./Header";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate, Link} from 'react-router-dom';
+import {loginOperation} from '../service/operations/auth'
 
 const LoginAccount = () => {
-  const { register, handleSubmit, errors, reset } = useForm();
+  const navigate = useNavigate();
+  const { register, handleSubmit, reset } = useForm();
   const [passwordShown, setPasswordShown] = useState(false);
   const handleFormSubmit = (data) => {
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+
     console.log(data);
+    //eslint-disable-next-line
+    const result = loginOperation(formData, navigate)
+    reset();
   };
   return (
     <div className="flex w-screen h-screen">
@@ -50,9 +61,9 @@ const LoginAccount = () => {
         <p className="text-base">
           Don’t have an Account?
           <br />
-          <span className="text-richgreen-100 font-semibold">
+          <Link to='/'><span className="text-richgreen-100 font-semibold">
             Create Account
-          </span>
+          </span></Link>
         </p>
       </div>
     </div>
