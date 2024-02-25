@@ -11,8 +11,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import userSlice from "./slices/userSlice";
 import { Toaster } from "react-hot-toast";
+import AddTask from "./components/Admin/AddTask";
+import AdminComponent from "./components/Admin/AdminComponent"
+import EditTask from "./components/Admin/EditTask"
+import AddBadge from './components/Admin/AddBadge'
 
 function App() {
+  
   const store = configureStore({
     reducer: {
       user: userSlice,
@@ -50,7 +55,7 @@ const appRouter = createBrowserRouter([
         path: "leaderboard",
         element: <LeaderBoard />,
       },
-      {
+     {
         path: "progress",
         element: <Progress />,
       },
@@ -58,6 +63,25 @@ const appRouter = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "admin",
+        element: <AdminComponent />,
+        children:[
+          {
+            path: "",
+            element: <AddTask />,
+          },
+          {
+            path: "editTask",
+            element: <EditTask />
+
+          },
+          {
+            path: "addBadge",
+            element: <AddBadge />
+          }
+        ]
+      }
     ],
   },
 ]);

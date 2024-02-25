@@ -3,9 +3,9 @@ import { Link, Outlet } from 'react-router-dom'
 
 const AdminComponent = () => {
   return (
-    <div className='w-full h-full min-h-[calc(100vh-64px)] border-2 border-red-600 flex justify-center items-center'>
+    <div className='w-full h-full min-h-[calc(100vh-64px)] flex justify-center items-center'>
         <div className='h-fit'>
-            <div className='border-4 rounded-full border-richgreen-400 h-fit min-w-[513px] flex items-center justify-between'>
+            <div className='border-4 rounded-full border-richgreen-400 h-fit mb-3 min-w-[513px] flex items-center justify-between'>
                 <Link to = ''>
                     <p className='uppercase font-semibold text-xl p-2 px-4 hover:bg-green-800 hover:text-white rounded-full'>Add Task</p>
                 </Link>
