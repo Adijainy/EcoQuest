@@ -6,11 +6,13 @@ const taskSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    description: {
-        type: String,
-        required: true,
-        trim: true,
-    },
+    description: [
+        {
+            type: String,
+            required: true,
+            trim: true,
+        }
+    ],
     points: {
         type: Number,
         required: true,
@@ -33,6 +35,11 @@ const taskSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false,
+    },
+    unGoalDescription: {
+        type: String,
+        required: false,
+        trim: true,
     }
 })
 
