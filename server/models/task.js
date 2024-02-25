@@ -27,7 +27,7 @@ const taskSchema = new mongoose.Schema({
     },
     unGoals: [
         {
-            type: Number,
+            type: String,
             required: true,
         }
     ],
