@@ -3,18 +3,19 @@ import { FaStar, FaArrowCircleDown, FaArrowRight } from "react-icons/fa";
 
 const TaskCard = (props) => {
   const { title, description, points, carbonAvoided } = props.data;
+  const onClickAction = props.onClickAction;
   return (
-    <div className="bg-white rounded-md shadow-md text-richgreen-300 text-sm p-4 min-w-52">
+    <div className="bg-white rounded-md shadow-lg text-richgreen-300 text-sm p-4 min-w-52 max-w-52 border border-gray-300">
       <h4 className="font-semibold">{title}</h4>
-      <h5 className="text-xs line-clamp-2 my-3">{description}</h5>
-      <button className="text-xs font-normal border-2 rounded-full py-1 px-2 text-orange-500  border-orange-500">
+      <h5 className="text-xs line-clamp-2 my-3">{description[0]}</h5>
+      <button className="btn-point">
         <FaStar className="text-orange-500 inline" /> {points} Points
       </button>
-      <button className="text-xs font-normal border-2 rounded-full py-1 px-2 ml-2 text-orange-500  border-orange-500">
+      <button className="btn-point ml-2">
         <FaArrowCircleDown className="text-orange-500 inline" /> {carbonAvoided}{" "}
         kg
       </button>
-      <button className="btn-gradient">
+      <button className="btn-gradient" onClick={onClickAction}>
         Take Action <FaArrowRight className="inline" />
       </button>
     </div>
