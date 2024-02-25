@@ -7,12 +7,25 @@ import Actions from "./components/Actions";
 import LeaderBoard from "./components/LeaderBoard";
 import Progress from "./components/Progress";
 import Profile from "./components/Profile";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import userSlice from "./slices/userSlice";
+import { Toaster } from "react-hot-toast";
 
 function App() {
+  const store = configureStore({
+    reducer: {
+      user: userSlice,
+    },
+  });
+
   return (
-    <div className="App">
-      <RouterProvider router={appRouter} />
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <RouterProvider router={appRouter} />
+      </div>
+      <Toaster />
+    </Provider>
   );
 }
 

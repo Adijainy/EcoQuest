@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Header from "./Header";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useNavigate, Link} from 'react-router-dom';
-import {loginOperation} from '../service/operations/auth'
+import { useNavigate, Link } from "react-router-dom";
+import { loginOperation } from "../service/operations/auth";
+import { useDispatch } from "react-redux";
 
 const LoginAccount = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { register, handleSubmit, reset } = useForm();
   const [passwordShown, setPasswordShown] = useState(false);
   const handleFormSubmit = (data) => {
@@ -14,10 +16,9 @@ const LoginAccount = () => {
     formData.append("email", data.email);
     formData.append("password", data.password);
 
-
     console.log(data);
     //eslint-disable-next-line
-    const result = loginOperation(formData, navigate)
+    const result = loginOperation(formData, navigate, dispatch);
     reset();
   };
   return (
@@ -61,9 +62,11 @@ const LoginAccount = () => {
         <p className="text-base">
           Don’t have an Account?
           <br />
-          <Link to='/'><span className="text-richgreen-100 font-semibold">
-            Create Account
-          </span></Link>
+          <Link to="/">
+            <span className="text-richgreen-100 font-semibold">
+              Create Account
+            </span>
+          </Link>
         </p>
       </div>
     </div>

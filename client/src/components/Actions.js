@@ -1,15 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { categories } from "../config/categoryList";
 import specialYeti from "../assests/specialYeti.png";
 import TaskCard from "./TaskCard";
-import { specialTask } from "../config/specialTask";
+
 import newsYeti from "../assests/newsYeti.png";
 import PopUpTask from "./PopUpTask";
+import { apiConnector } from "../service/apiConnecter";
+import {
+  getAllTasksOperation,
+  getSpecialTaskOperation,
+} from "../service/operations/taskAPI";
+import { useSelector } from "react-redux";
 
 const Actions = () => {
+  const { user } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.user);
+  console.log(user);
+  console.log(token);
   const [openPopUp, setOpenPopUp] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-  console.log(openPopUp);
+  const [climateNews, setClimateNews] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [specialTasks, setSpecialTasks] = useState([]);
+  useEffect(() => {
+    fetchClimateNews();
+    fetchAllTasks();
+    fetchSpecialTasks();
+  }, []);
+  async function fetchSpecialTasks() {
+    const response = await getSpecialTaskOperation(token);
+    setSpecialTasks(response);
+  }
+  async function fetchAllTasks() {
+    const response = await getAllTasksOperation(token);
+    setTasks(response);
+    //console.log(response);
+  }
+
+  async function fetchClimateNews() {
+    let url = "https://climate-news-feed.p.rapidapi.com/";
+    let params = {
+      limit: "6",
+      exclude: "The Guardian",
+    };
+    const headers = {
+      "X-RapidAPI-Key": "d56b1f2effmsh5f29610e2682c33p126cd8jsn6d4e17a18aa7",
+      "X-RapidAPI-Host": "climate-news-feed.p.rapidapi.com",
+    };
+    const response = await apiConnector("GET", url, null, headers, params);
+    //console.log(response.data.articles);
+    setClimateNews(response.data.articles);
+  }
+
   return (
     <div className="font-Poppins min-h-[calc(100vh-64px)] text-richgreen-400 px-32 pt-10 flex gap-24 relative overflow-hidden">
       <div className="w-[60%]">
@@ -53,7 +95,22 @@ const Actions = () => {
               />
             </div>
             <div className="flex flex-row gap-3 overflow-auto">
-              {specialTask.map((task) => (
+              {specialTasks &&
+                specialTasks.map((task) => (
+                  <TaskCard
+                    key={task._id}
+                    data={task}
+                    onClickAction={() => {
+                      setOpenPopUp(true);
+                      setSelectedTask(task);
+                    }}
+                  />
+                ))}
+            </div>
+          </div>
+          <div className="flex flex-row gap-3 overflow-auto mt-4">
+            {tasks &&
+              tasks.map((task) => (
                 <TaskCard
                   key={task._id}
                   data={task}
@@ -63,19 +120,6 @@ const Actions = () => {
                   }}
                 />
               ))}
-            </div>
-          </div>
-          <div className="flex flex-row gap-3 overflow-auto mt-4">
-            {specialTask.map((task) => (
-              <TaskCard
-                key={task._id}
-                data={task}
-                onClickAction={() => {
-                  setOpenPopUp(true);
-                  setSelectedTask(task);
-                }}
-              />
-            ))}
           </div>
         </div>
       </div>
@@ -85,6 +129,18 @@ const Actions = () => {
           <br />
           in the world..
         </h2>
+        <div>
+          {climateNews.map((news, ind) => (
+            <div
+              key={ind}
+              className="border-2 border-richgreen-50 bg-richgreen-100 bg-opacity-10 rounded-2xl px-6 py-2 my-2"
+            >
+              <h3 className="text-xs font-semibold line-clamp-2">
+                {news.title}
+              </h3>
+            </div>
+          ))}
+        </div>
         <img
           className="absolute bottom-0 right-0"
           src={newsYeti}
