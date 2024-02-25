@@ -89,7 +89,7 @@ const Profile = () => {
             {/* Twitter share button */}
             <button className="btn-green">
               <TwitterShareButton
-                url={window.location.href}
+                url="www.ecoquest.com"
                 title={`Check out my stats on EcoQuest! I've earned 40 points and  badges!`}
               >
                 Twitter
