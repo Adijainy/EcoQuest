@@ -36,12 +36,12 @@ connectCloudinary();
 //importing routes
 const userRoutes = require('./routes/user');
 const taskRoutes = require('./routes/task');
-//const badgeRoutes = require('./routes/badge');
+const badgeRoutes = require('./routes/badge');
 
 //use routes
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/task', taskRoutes);
-//app.use('/api/v1/badge', badgeRoutes);
+app.use('/api/v1/badge', badgeRoutes);
 
 app.get('/', (req, res)=>{
     res.send('Server is running');
